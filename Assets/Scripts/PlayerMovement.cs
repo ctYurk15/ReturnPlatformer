@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float speed = 5f;
     [SerializeField] float jump = 5f;
     [Space]
+    [SerializeField] string enemyHead = "Enemy head";
+    [Space]
     [SerializeField] Transform groundCheck;
     [SerializeField] LayerMask ground;
 
@@ -30,13 +32,27 @@ public class PlayerMovement : MonoBehaviour
         //jumping
         if(Input.GetButtonDown("Jump") && IsGrounded())
         {
-            rb.velocity = new Vector3(rb.velocity.x, jump, rb.velocity.z);
+            Jump();
         }
+    }
+
+    void Jump()
+    {
+        rb.velocity = new Vector3(rb.velocity.x, jump, rb.velocity.z);
     }
 
     bool IsGrounded()
     {
         //checks if groundCheck with collider of shpere with .1f radius overlaps with objects, that has ground layer
         return Physics.CheckSphere(groundCheck.position, 0.1f, ground);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == enemyHead)
+        {
+            Destroy(collision.transform.parent.gameObject);
+            Jump();
+        }
     }
 }
