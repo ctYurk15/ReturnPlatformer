@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ItemCollector : MonoBehaviour
 {
     [SerializeField] Text coinsText;
+    [SerializeField] AudioSource collectionSound;
     int coins = 0;
 
     private void OnTriggerEnter(Collider other)
@@ -14,6 +15,7 @@ public class ItemCollector : MonoBehaviour
         {
             Destroy(other.gameObject);
             coins++;
+            collectionSound.Play();
 
             coinsText.text = "Coins: " + coins;
         }

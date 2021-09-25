@@ -8,6 +8,8 @@ public class PlayerLife : MonoBehaviour
     [SerializeField] string enemy_tag = "Enemy";
     [SerializeField] float delay = 1f;
     [SerializeField] float minBorderY = -5f;
+    [SerializeField] AudioSource deadSound;
+
 
     bool dead = false;
 
@@ -34,6 +36,7 @@ public class PlayerLife : MonoBehaviour
 
     void Die()
     {
+        deadSound.Play();
         Invoke("ReloadLevel", delay);
         dead = true;
     }
